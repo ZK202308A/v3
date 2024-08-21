@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, provide, onMounted } from 'vue';
+import { ref, provide, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 import CountButtons from './CountButtons.vue';
 import CountDisplay from './CountDisplay.vue';
 
@@ -16,7 +16,6 @@ const data = ref({num:0})
 const changeNum = (amount) => {
   data.value.num += amount
   console.log(data.value)
-
   localStorage.setItem('count', JSON.stringify(data.value))
 }
 
@@ -33,6 +32,13 @@ onMounted(() => {
   const obj = JSON.parse(str)
   console.log(obj)
   data.value = obj
+})
+
+onBeforeUnmount(() => {
+  localStorage.setItem('count', JSON.stringify(data.value))
+})
+onUnmounted(() => {
+  localStorage.setItem('count', JSON.stringify(data.value))
 })
 
 
