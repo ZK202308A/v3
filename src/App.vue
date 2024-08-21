@@ -1,9 +1,9 @@
 <script setup>
-import CountContainer from './components/ex1/CountContainer.vue';
+import TodoContainer from './components/ex2/TodoContainer.vue';
 </script>
 
 <template>
-  <CountContainer></CountContainer>
+  <TodoContainer></TodoContainer>
 </template>
 
 <style scoped>
