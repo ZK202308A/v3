@@ -35,7 +35,7 @@ const handleClickPage = (pageNum) => {
 
 const todoList = ref([])
 
-const loadPageData = async(page) => {
+const loadPageData = async (page) => {
   const data = await getList(page)
   todoList.value = data.content
 }
@@ -48,6 +48,7 @@ onMounted(() => {
 onBeforeRouteUpdate((to, from, next) => {
   const page = to.query.page
   loadPageData(page)
+  next()
 })
 
 </script>
