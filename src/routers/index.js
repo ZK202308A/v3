@@ -2,6 +2,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import todoRouting from './todo'
 
+
+
+
+
 const MainPage = () => import("../pages/MainPage.vue")
 const AboutPage = () => import("../pages/AboutPage.vue")
 
