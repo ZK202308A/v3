@@ -1,9 +1,9 @@
 <script setup>
-import Ex2 from './components/ex3/Ex2.vue'
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <Ex2></Ex2>
+  <RouterView></RouterView>
 </template>
 
 <style scoped>
