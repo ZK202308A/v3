@@ -1,5 +1,4 @@
-import useMember from "../stores/useMember"
-
+import {moveToLogin } from "./moveToLogin"
 
 
 const IndexPage = () => import("../pages/todo/IndexPage.vue")
@@ -8,21 +7,7 @@ const TodoAddPage = () => import("../pages/todo/TodoAddPage.vue")
 const TodoReadPage = () => import("../pages/todo/TodoReadPage.vue")
 
 
-const moveToLogin = (to, from, next) => {
 
-  const checkLogin = () => {
-    const {member} = useMember()
-    return member.mid ? true : false   
-  }
-  console.log('move to todo add page: ' + checkLogin())
-
-  if(checkLogin()){
-    next()
-  }else {
-    next('/login')
-  }
-
-}
 
 
 const todoRouting = { path: "/todo", 
