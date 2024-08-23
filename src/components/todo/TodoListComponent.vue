@@ -2,6 +2,12 @@
 
 <template>
   <div>
+
+
+    <div v-if="loading" class="loadingDiv">
+      <h1>Loading.............</h1>
+    </div>
+
     <ul>
       <li v-for="todo in todoList" :key="todo.mno">
         {{ todo }}
@@ -20,13 +26,15 @@
 </template>
 
 <script setup>
+
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { getList } from '../../apis/todoAPI';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const route = useRoute()
 const router = useRouter()
 
+const loading = ref(false)
 
 
 const handleClickPage = (pageNum) => {
@@ -36,8 +44,17 @@ const handleClickPage = (pageNum) => {
 const todoList = ref([])
 
 const loadPageData = async (page) => {
+
+  loading.value = true
+
   const data = await getList(page)
+
   todoList.value = data.content
+
+  setTimeout(()=> {
+      loading.value = false
+  },1000)
+  
 }
 
 onMounted(() => {
@@ -53,6 +70,16 @@ onBeforeRouteUpdate((to, from, next) => {
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
+.loadingDiv {
+  position: absolute;
+  top: 30vh;
+  left: 40vw;
+  width: 20vw;
+  height: 10vh;
+  background-color: aqua;
+
+}
 
 </style>
