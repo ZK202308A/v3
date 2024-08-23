@@ -1,22 +1,22 @@
 import { defineStore } from "pinia";
-import { reactive, computed, toRefs, toRef } from "vue";
+import { ref, computed,  toRef } from "vue";
 
 const useMember = defineStore('memberStore', () => {
 
-  const member = reactive({ mid: localStorage.getItem('mid') || '' });
+  const member = ref({ mid: localStorage.getItem('mid') || '' });
 
   const memberMid = toRef(member, 'mid');
 
   const login = (value) => {
   
-    member.mid = value
+    member.value.mid = value
   
     localStorage.setItem('mid', value)
   }
 
   const logout = () => {
   
-    member.mid = ''
+    member.value.mid = ''
   
     localStorage.removeItem('mid')
   
@@ -28,7 +28,7 @@ const useMember = defineStore('memberStore', () => {
       return null
     }
 
-    if(localStorage.getItem('mid') && ! member.mid){
+    if(localStorage.getItem('mid') && ! member.value.mid){
       member.mid = localStorage.getItem('mid')
       return localStorage.getItem('mid')
     }

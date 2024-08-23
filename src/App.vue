@@ -2,7 +2,7 @@
 import { RouterView, RouterLink } from 'vue-router';
 import useMember from './stores/useMember';
 
-const {computedMid, member} = useMember()
+const {computedMid, member, logout} = useMember()
 
 
 
