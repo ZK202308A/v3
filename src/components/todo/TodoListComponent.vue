@@ -51,9 +51,7 @@ const loadPageData = async (page) => {
 
   todoList.value = data.content
 
-  setTimeout(()=> {
-      loading.value = false
-  },1000)
+  loading.value = false
   
 }
 

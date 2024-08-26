@@ -11,21 +11,18 @@
 
 <script setup>
 import { ref } from 'vue';
-import useMember from '../stores/useMember';
+import useMember2 from '../stores/useMember2';
 
 const midInput = ref('')
-
-const {login} = useMember()
+const {signin} = useMember2()
 
 const handleClick = () => {
-
   const mid = midInput.value 
-  login(mid)
+  signin(mid)
 }
-
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
