@@ -11,6 +11,7 @@ const useListData = (listFn) => {
   
   const loading = ref(false)
   const refresh = ref(false)
+
   const result = ref({
     content:[],
     number:0,
@@ -80,7 +81,7 @@ const useListData = (listFn) => {
 
   watch(refresh, ()=> {
     console.log("refresh " + refresh.value)
-    console.log("")
+    console.log("------------------" + route.query.page)
     //loadPageData(route.query.page || 1)
   })
 
@@ -98,7 +99,7 @@ const useListData = (listFn) => {
     router.push(`/todo/read/${tno}`)
   }
 
-  return {loading, moveToRead, router, refresh, result, pageArr}
+  return {loading, moveToRead, router, route, refresh, result, pageArr}
 
 }
 

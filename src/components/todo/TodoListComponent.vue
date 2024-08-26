@@ -24,12 +24,18 @@
 import { getList } from '../../apis/todoAPI';
 import useListData from '../../hooks/useListData';
 
-const {loading, moveToRead, router, refresh, result, pageArr} = useListData(getList)
+const {loading, moveToRead, router, route, refresh, result, pageArr} = useListData(getList)
 
 const handleClickPage = (pageNum) => {
   console.log("handle click page " + pageNum )
+  
+  const currentPage = route.query.page || 1
+
   router.push({query: {page:pageNum} }).then(() => {
-    refresh.value = !refresh.value
+    if(currentPage !== pageNum){
+      refresh.value = !refresh.value
+    }//end if
+    
   })
 }
 
