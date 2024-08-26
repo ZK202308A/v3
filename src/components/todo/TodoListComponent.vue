@@ -120,15 +120,15 @@ watch(refresh.value, ()=>{
   loadPageData(page)
 })
 
-// onBeforeRouteUpdate((to, from, next) => {
+onBeforeRouteUpdate((to, from, next) => {
 
-//   console.log("onBeforeRouteUpdate-----------------")
-//   console.log(to)
+  console.log("onBeforeRouteUpdate-----------------")
+  console.log(to)
 
-//   const page = to.query.page
-//   loadPageData(page)
-//   next()
-// })
+  const page = to.query.page
+  loadPageData(page)
+  next()
+})
 
 </script>
 
