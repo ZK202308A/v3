@@ -2,23 +2,19 @@
 
 <template>
   <div>
-
-
     <div v-if="loading" class="loadingDiv">
       <h1>Loading.............</h1>
     </div>
 
-    <ul>
+      <ul>
+        <li v-for="t in result.content" :key="t.tno">
+          {{ t }}
+        </li>
+      </ul>
 
-    </ul>
-
-    <div>
-      <span @click="() => handleClickPage(1)" > 1 </span>
-      <span @click="() => handleClickPage(2)" > 2 </span>
-      <span @click="() => handleClickPage(3)" > 3 </span>
-      <span @click="() => handleClickPage(4)" > 4 </span>
-      <span @click="() => handleClickPage(5)" > 5 </span>
-    </div>
+      <template v-for="(p,idx) in makePageArr()" :key="idx">
+        <span class="pageSpan" @click="() => handleClickPage(p.page)" > {{p.label}} </span>
+      </template>
 
   </div>
 </template>
@@ -27,16 +23,23 @@
 
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { getList } from '../../apis/todoAPI';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const route = useRoute()
 const router = useRouter()
 
 const loading = ref(false)
+const refresh = ref({load:false, page:0})
 
 
 const handleClickPage = (pageNum) => {
+
+  console.log("handle click page " + pageNum )
+
   router.push({query: {page:pageNum} })
+
+  refresh.value.load = !refresh.value.load
+  refresh.value.page = pageNum
 }
 
 const result = ref({
@@ -83,12 +86,26 @@ const makePageArr = () => {
     lastPage = result.value.totalPages
   }
 
-  console.log(start)
-  console.log(lastPage)
-  console.log(prev, next)
+  // console.log(start)
+  // console.log(lastPage)
+  // console.log(prev, next)
 
   //페이지 번호에 출력에 필요한 데이터를 배열로 
+  const pageArr = []
 
+  //이전
+  if(prev){
+    pageArr.push({page: start -1, label:'이전' })
+  }
+
+  for(let i = start; i <= lastPage ; i++){
+    pageArr.push({page: i, label: i })
+  }
+  //다음
+  if(next){
+    pageArr.push({page: lastPage + 1, label:'다음' })
+  }
+  return pageArr
 }
 
 
@@ -97,11 +114,21 @@ onMounted(() => {
   loadPageData(page)
 })
 
-onBeforeRouteUpdate((to, from, next) => {
-  const page = to.query.page
+watch(refresh.value, ()=>{
+  console.log('watch...................')
+  const page =  refresh.value.page || 1
   loadPageData(page)
-  next()
 })
+
+// onBeforeRouteUpdate((to, from, next) => {
+
+//   console.log("onBeforeRouteUpdate-----------------")
+//   console.log(to)
+
+//   const page = to.query.page
+//   loadPageData(page)
+//   next()
+// })
 
 </script>
 
@@ -115,6 +142,12 @@ onBeforeRouteUpdate((to, from, next) => {
   height: 10vh;
   background-color: aqua;
 
+}
+
+.pageSpan {
+  margin: 0.3em;
+  padding: 0.1em;
+  border: 1px solid black;
 }
 
 </style>
