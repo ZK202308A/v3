@@ -1,21 +1,25 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 
-const useMember2 = defineStore('', () => {
+const useMember2 = defineStore('useMember2', () => {
 
   const userId = ref('')
 
   const signin = (str) => {
 
     userId.value = str
+    console.log(userId)
+    
   }
 
   const signout = () => {
     userId.value = ''
   }
 
-  return {userId, signin, signout}
+  const computedMid = computed(() => userId)
+
+  return {userId, signin, signout, computedMid}
 
 })
 

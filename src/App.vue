@@ -2,8 +2,10 @@
 import { RouterView, RouterLink } from 'vue-router';
 import useMember2 from './stores/useMember2'
 
-const {userId} = useMember2()
+const {computedMid} = useMember2()
 
+console.log("-----------------------------")
+console.log(computedMid)
 
 
 </script>
@@ -22,7 +24,7 @@ const {userId} = useMember2()
 
   <div >
     <hr/>
-      USERID : {{ userId  }}   
+      USERID : {{ computedMid  }}   
     <hr/>
   </div>
 
