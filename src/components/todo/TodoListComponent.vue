@@ -9,9 +9,7 @@
     </div>
 
     <ul>
-      <li v-for="todo in todoList" :key="todo.mno">
-        {{ todo }}
-      </li>
+
     </ul>
 
     <div>
@@ -41,7 +39,13 @@ const handleClickPage = (pageNum) => {
   router.push({query: {page:pageNum} })
 }
 
-const todoList = ref([])
+const result = ref({
+  content:[],
+  number:0,
+  size:10,
+  totalElements:0,
+  totalPages:0
+})
 
 const loadPageData = async (page) => {
 
@@ -49,11 +53,44 @@ const loadPageData = async (page) => {
 
   const data = await getList(page)
 
-  todoList.value = data.content
+  console.log(data)
+
+  result.value = data
+
+  makePageArr()
 
   loading.value = false
   
 }
+
+const makePageArr = () => {
+
+  //현재 페이지 번호 
+  const currentPage = result.value.number + 1
+
+  //마지막 페이지 번호  -  올림( 페이지번호/10.0 ) * 10 
+
+  let lastPage = Math.ceil( currentPage/10.0 ) * 10
+
+  //시작 페이지 번호
+  const start = lastPage - 9 
+
+  //이전, 다음 
+  const prev = start !== 1
+  const next = result.value.totalPages > lastPage
+
+  if(result.value.totalPages < lastPage){
+    lastPage = result.value.totalPages
+  }
+
+  console.log(start)
+  console.log(lastPage)
+  console.log(prev, next)
+
+  //페이지 번호에 출력에 필요한 데이터를 배열로 
+
+}
+
 
 onMounted(() => {
   const page =  route.query.page || 1
