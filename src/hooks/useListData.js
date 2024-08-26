@@ -1,8 +1,10 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
-import { getList } from '../apis/todoAPI';
 
-const useListData = () => {
+
+const useListData = (listFn) => {
+
+  const fn = listFn
 
   const route = useRoute()
   const router = useRouter()
@@ -20,7 +22,7 @@ const useListData = () => {
   const loadPageData = async (page) => {
 
     loading.value = true
-    const data = await getList(page)
+    const data = await fn(page)
 
     result.value = data
     loading.value = false
@@ -88,7 +90,11 @@ const useListData = () => {
     next()
   })
 
-  return {loading, router, refresh, result, pageArr}
+  const moveToRead = (tno) => {
+    router.push(`/todo/read/${tno}`)
+  }
+
+  return {loading, moveToRead, router, refresh, result, pageArr}
 
 }
 

@@ -3,17 +3,12 @@
 <template>
   <div>
     <h1>Todo Read Page</h1>
+    <TodoReadComponent></TodoReadComponent>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
-
-
-const route = useRoute()
-
-console.log(route.params.mno)
-
+import TodoReadComponent from '../../components/todo/TodoReadComponent.vue';
 </script>
 
 <style lang="scss" scoped>

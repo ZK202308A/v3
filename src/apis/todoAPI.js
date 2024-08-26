@@ -13,3 +13,10 @@ export const getList = async (page) => {
   return res.data
 
 }
+
+export const getOne = async  (mno) => {
+
+  const res = await axios.get(`${host}/${mno}`)
+
+  return res.data
+}

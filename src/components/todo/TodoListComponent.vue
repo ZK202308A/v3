@@ -7,7 +7,7 @@
     </div>
 
       <ul>
-        <li v-for="t in result.content" :key="t.tno">
+        <li v-for="t in result.content" :key="t.tno" @click="()=>handleClickMove(t.mno)">
           {{ t }}
         </li>
       </ul>
@@ -21,15 +21,21 @@
 
 <script setup>
 
+import { getList } from '../../apis/todoAPI';
 import useListData from '../../hooks/useListData';
 
-const {loading, router, refresh, result, pageArr} = useListData()
+const {loading, moveToRead, router, refresh, result, pageArr} = useListData(getList)
 
 const handleClickPage = (pageNum) => {
   console.log("handle click page " + pageNum )
   router.push({query: {page:pageNum} }).then(() => {
     refresh.value = !refresh.value
   })
+}
+
+const handleClickMove = ( tno )=> {
+
+  moveToRead(tno)
 }
 
 
