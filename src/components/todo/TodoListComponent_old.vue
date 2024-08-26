@@ -12,7 +12,7 @@
         </li>
       </ul>
 
-      <template v-for="(p,idx) in pageArr" :key="idx">
+      <template v-for="(p,idx) in makePageArr()" :key="idx">
         <span class="pageSpan" @click="() => handleClickPage(p.page)" > {{p.label}} </span>
       </template>
 
@@ -23,13 +23,25 @@
 
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { getList } from '../../apis/todoAPI';
-import { computed, onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const route = useRoute()
 const router = useRouter()
 
 const loading = ref(false)
-const refresh = ref(false)
+const refresh = ref({load:false, page:0})
+
+
+const handleClickPage = (pageNum) => {
+
+  console.log("handle click page " + pageNum )
+
+  router.push({query: {page:pageNum} })
+
+  refresh.value.load = !refresh.value.load
+  refresh.value.page = pageNum
+}
+
 const result = ref({
   content:[],
   number:0,
@@ -38,27 +50,23 @@ const result = ref({
   totalPages:0
 })
 
-
-const handleClickPage = (pageNum) => {
-  console.log("handle click page " + pageNum )
-  router.push({query: {page:pageNum} }).then(() => {
-    refresh.value = !refresh.value
-  })
-
-}
-
-
 const loadPageData = async (page) => {
 
   loading.value = true
+
   const data = await getList(page)
 
+  console.log(data)
+
   result.value = data
+
+  makePageArr()
+
   loading.value = false
   
 }
 
-const pageArr =  computed(() => {
+const makePageArr = () => {
 
   //현재 페이지 번호 
   const currentPage = result.value.number + 1
@@ -98,24 +106,27 @@ const pageArr =  computed(() => {
     pageArr.push({page: lastPage + 1, label:'다음' })
   }
   return pageArr
-})
+}
 
 
 onMounted(() => {
-
-  loadPageData(route.query.page || 1)
-
+  const page =  route.query.page || 1
+  loadPageData(page)
 })
 
-watch(refresh, ()=> {
-  console.log("refresh " + refresh.value)
-  loadPageData(route.query.page || 1)
+watch(refresh.value, ()=>{
+  console.log('watch...................')
+  const page =  refresh.value.page || 1
+  loadPageData(page)
 })
 
 onBeforeRouteUpdate((to, from, next) => {
 
   console.log("onBeforeRouteUpdate-----------------")
-  loadPageData(to.query.page || 1)
+  console.log(to)
+
+  const page = to.query.page
+  loadPageData(page)
   next()
 })
 

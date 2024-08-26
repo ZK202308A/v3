@@ -23,13 +23,13 @@
 
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { getList } from '../../apis/todoAPI';
-import { computed, onMounted, ref, watch } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 
 const route = useRoute()
 const router = useRouter()
 
 const loading = ref(false)
-const refresh = ref(false)
+
 const result = ref({
   content:[],
   number:0,
@@ -40,25 +40,22 @@ const result = ref({
 
 
 const handleClickPage = (pageNum) => {
+
   console.log("handle click page " + pageNum )
-  router.push({query: {page:pageNum} }).then(() => {
-    refresh.value = !refresh.value
-  })
+  router.push({query: {page:pageNum, time:Date.now()} })
 
 }
 
 
 const loadPageData = async (page) => {
-
   loading.value = true
   const data = await getList(page)
-
   result.value = data
   loading.value = false
   
 }
 
-const pageArr =  computed(() => {
+const pageArr = computed(() => {
 
   //현재 페이지 번호 
   const currentPage = result.value.number + 1
@@ -102,22 +99,14 @@ const pageArr =  computed(() => {
 
 
 onMounted(() => {
-
-  loadPageData(route.query.page || 1)
-
+    loadPageData( route.query.page || 1 )
 })
 
-watch(refresh, ()=> {
-  console.log("refresh " + refresh.value)
+watch(() => route.query, () => {
+  console.log("watched..........")
   loadPageData(route.query.page || 1)
 })
 
-onBeforeRouteUpdate((to, from, next) => {
-
-  console.log("onBeforeRouteUpdate-----------------")
-  loadPageData(to.query.page || 1)
-  next()
-})
 
 </script>
 

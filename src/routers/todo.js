@@ -14,7 +14,7 @@ const todoRouting = { path: "/todo",
   component: IndexPage,
   children: [
     {path: "list", component: TodoListPage, beforeEnter: moveToLogin},
-    {path: "", redirect: '/todo/list'},
+    {path: "", redirect: '/todo/list?page=1'},
     {path: "read/:mno", component: TodoReadPage},
     { path: "add", component: TodoAddPage, beforeEnter: moveToLogin},
   ]
