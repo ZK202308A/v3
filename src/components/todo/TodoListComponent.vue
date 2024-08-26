@@ -32,7 +32,7 @@ const handleClickPage = (pageNum) => {
   const currentPage = route.query.page || 1
 
   router.push({query: {page:pageNum} }).then(() => {
-    if(currentPage !== pageNum){
+    if(currentPage == pageNum){
       refresh.value = !refresh.value
     }//end if
     
