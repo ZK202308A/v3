@@ -31,10 +31,6 @@ const useMember2 = defineStore('useMember2', () => {
       userId.value.mid = localStorage.getItem("mid")
     }
 
-    if(toMid){
-      return toMid
-    }
-
     return toMid
   })
 

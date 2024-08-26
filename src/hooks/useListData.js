@@ -80,13 +80,15 @@ const useListData = (listFn) => {
 
   watch(refresh, ()=> {
     console.log("refresh " + refresh.value)
+    console.log("")
     //loadPageData(route.query.page || 1)
   })
 
   onBeforeRouteUpdate((to, from, next) => {
 
     console.log("onBeforeRouteUpdate-----------------")
-    
+
+
     loadPageData(to.query.page || 1)
     next()
     

@@ -35,3 +35,11 @@ export const deleteOne = async (mno) => {
 
   return res.data
 }
+
+export const putOne = async (todo) => {
+
+  const res = await axios.put(`${host}/${todo.mno}`, todo)
+
+  return res.data
+
+}
