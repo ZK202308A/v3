@@ -5,7 +5,7 @@ const IndexPage = () => import("../pages/todo/IndexPage.vue")
 const TodoListPage = () => import("../pages/todo/TodoListPage.vue")
 const TodoAddPage = () => import("../pages/todo/TodoAddPage.vue")
 const TodoReadPage = () => import("../pages/todo/TodoReadPage.vue")
-
+const TodoEditPage = () => import("../pages/todo/TodoEditPage.vue")
 
 
 
@@ -16,6 +16,7 @@ const todoRouting = { path: "/todo",
     {path: "list", component: TodoListPage, beforeEnter: moveToLogin},
     {path: "", redirect: '/todo/list?page=1'},
     {path: "read/:mno", component: TodoReadPage},
+    {path: "edit/:mno", component: TodoEditPage},
     { path: "add", component: TodoAddPage, beforeEnter: moveToLogin},
   ]
 }

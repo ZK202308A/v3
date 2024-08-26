@@ -20,3 +20,18 @@ export const getOne = async  (mno) => {
 
   return res.data
 }
+
+export const postOne = async (obj) => {
+
+  const res = await axios.post(`${host}`, obj)
+
+  return res.data
+
+}
+
+export const deleteOne = async (mno) => {
+
+  const res = await axios.delete(`${host}/${mno}`)
+
+  return res.data
+}

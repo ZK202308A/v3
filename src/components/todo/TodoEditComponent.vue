@@ -4,14 +4,16 @@
   <div>
     {{ todo }}
   </div>
-  <button @click="handleMoveEdit" >EDIT</button>
+  <div>
+    <button @click="handleClickDelete">DELETE</button>
+  </div>
 </template>
 
 <script setup>
 
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getOne } from '../../apis/todoAPI';
+import { deleteOne, getOne } from '../../apis/todoAPI';
 import useMember2 from '../../stores/useMember2';
 
 
@@ -22,9 +24,11 @@ const mno = route.params.mno
 
 const {computedMid} = useMember2()
 
-const handleMoveEdit = () => {
+const handleClickDelete = () => {
 
-  router.push(`/todo/edit/${mno}`)
+  deleteOne(mno)
+
+  router.replace("/todo/list")
 
 }
 
