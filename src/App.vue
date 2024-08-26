@@ -2,7 +2,7 @@
 import { RouterView, RouterLink } from 'vue-router';
 import useMember2 from './stores/useMember2'
 
-const {computedMid} = useMember2()
+const {computedMid, signout} = useMember2()
 
 console.log("-----------------------------")
 console.log(computedMid)
@@ -16,9 +16,9 @@ console.log(computedMid)
     <span> <RouterLink to="/about">About</RouterLink>  </span>
     <span> <RouterLink to="/todo">Todo</RouterLink>  </span>
 
-    <span > <RouterLink to="/login">Login</RouterLink> </span>
+    <span v-if="computedMid ==='' " > <RouterLink to="/login">Login</RouterLink> </span>
 
-    <span > <button @click="logout" >Logout</button> </span>
+    <span v-if="computedMid !=='' "> <button @click="signout" >Logout</button> </span>
 
   </div>
 

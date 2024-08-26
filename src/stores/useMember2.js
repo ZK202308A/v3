@@ -1,23 +1,42 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { computed, ref, toRef } from "vue";
 
 
 const useMember2 = defineStore('useMember2', () => {
 
-  const userId = ref('')
+  const userId = ref({mid:''})
+
+  const toMid = toRef(userId.value, "mid")
 
   const signin = (str) => {
 
-    userId.value = str
+    userId.value.mid = str
+    localStorage.setItem("mid", str)
     console.log(userId)
     
   }
 
   const signout = () => {
-    userId.value = ''
+    userId.value.mid = ''
+    localStorage.removeItem("mid")
   }
 
-  const computedMid = computed(() => userId)
+  const computedMid = computed(() => {
+
+    if(! localStorage.getItem("mid")) {
+      return ''
+    }
+
+    if(localStorage.getItem("mid")){
+      userId.value.mid = localStorage.getItem("mid")
+    }
+
+    if(toMid){
+      return toMid
+    }
+
+    return toMid
+  })
 
   return {userId, signin, signout, computedMid}
 
